@@ -57,10 +57,10 @@
 
 /* LWB config */
 #define LWB_ENABLE                      1
-#define LWB_NETWORK_ID                  0x3333
+#define LWB_NETWORK_ID                  0x4444
 #define LWB_N_TX                        2    /* number of transmissions */
 #define LWB_NUM_HOPS                    6    /* network diameter in number of hops */
-#define LWB_T_GAP                       ELWB_MS_TO_TICKS(10)
+#define LWB_T_GAP                       LWB_MS_TO_TICKS(10)
 #define LWB_SCHED_PERIOD                15
 #define LWB_DATA_ACK                    1
 #define LWB_CONT_USE_HSTIMER            1
@@ -110,8 +110,8 @@
   #define ISR_OFF_IND()               if (!nested) PIN_CLR(FLOCKLAB_INT1)
   #define CPU_ON_IND()                //PIN_SET(FLOCKLAB_INT2)
   #define CPU_OFF_IND()               //PIN_CLR(FLOCKLAB_INT2)
-  #define ELWB_RESUMED()              //PIN_SET(FLOCKLAB_INT2)
-  #define ELWB_SUSPENDED()            //PIN_CLR(FLOCKLAB_INT2)
+  #define LWB_RESUMED()               //PIN_SET(FLOCKLAB_INT2)
+  #define LWB_SUSPENDED()             //PIN_CLR(FLOCKLAB_INT2)
   #define POST_TASK_RESUMED()         //PIN_SET(FLOCKLAB_INT2)
   #define POST_TASK_SUSPENDED()       //PIN_CLR(FLOCKLAB_INT2)
   #define GLORIA_START_IND()          led_on(LED_SYSTEM); PIN_SET(FLOCKLAB_INT2)

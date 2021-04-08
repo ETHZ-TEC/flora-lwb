@@ -13,6 +13,7 @@
 #include "main.h"
 
 
+extern QueueHandle_t xQueueHandle_tx;
 extern QueueHandle_t xQueueHandle_rx;
 extern TaskHandle_t xTaskHandle_com;
 extern TaskHandle_t xTaskHandle_post;
@@ -62,10 +63,14 @@ void vTask_post(void const * argument)
     if (data_period) {
       /* only send other messages once the node info msg has been sent! */
       uint64_t network_time = 0;
-      //lwb_get_last_syncpoint(&network_time, 0); TODO
+      lwb_get_last_syncpoint(&network_time, 0);
       uint32_t div = (network_time / (1000000 * data_period));
       if (div != last_pkt) {
-        //TODO generate data packet
+        /* generate a dummy packet (header only, no data) */
+        if (!ps_compose_msg(DPP_DEVICE_ID_SINK, DPP_MSG_TYPE_INVALID, 0, 0, &msg_buffer) ||
+            !xQueueSend(xQueueHandle_tx, &msg_buffer, 0)) {
+          LOG_WARNING("failed to insert message into transmit queue");
+        }
         last_pkt = div;
       }
     }

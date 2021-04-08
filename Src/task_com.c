@@ -104,8 +104,8 @@ void vTask_com(void const * argument)
   gloria_set_modulation(gloria_modulation);
   gloria_set_band(gloria_band);
 
-  /* set LWB config values TODO */
-  /*if (lwb_sched_set_period(lwb_period)) { // Note: period needs to be larger than max round duration (based on current values of )
+  /* set LWB config values */
+  if (lwb_sched_set_period(lwb_period)) { // Note: period needs to be larger than max round duration (based on current values of )
     LOG_INFO("LWB successfully set period to %lus", lwb_period);
   } else {
     LOG_WARNING("LWB rejects setting period to %lus", lwb_period);
@@ -119,12 +119,12 @@ void vTask_com(void const * argument)
     LOG_INFO("LWB successfully set num_hops to %u", lwb_num_hops);
   } else {
     LOG_WARNING("LWB rejects setting num_hops to %u", lwb_num_hops);
-  }*/
+  }
 
-  /* init LWB TODO */
-  /*if (!lwb_init(xTaskGetCurrentTaskHandle(), 0, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, 0, listen_timeout, IS_HOST)) {
+  /* init LWB */
+  if (!lwb_init(xTaskGetCurrentTaskHandle(), 0, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, listen_timeout, IS_HOST)) {
     FATAL_ERROR("LWB init failed");
-  }*/
+  }
 #if COLLECT_FLOODING_DATA
   lwb_register_slot_callback(collect_radio_stats);
 
@@ -156,7 +156,7 @@ void vTask_com(void const * argument)
   );
 #endif /* COLLECT_FLOODING_DATA */
 
-  /* start LWB TODO */
-  //lwb_start();
+  /* start LWB */
+  lwb_start();
   FATAL_ERROR("LWB task terminated");
 }
