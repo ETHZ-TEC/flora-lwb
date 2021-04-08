@@ -21,6 +21,8 @@ static volatile uint8_t   lwb_n_tx          = LWB_N_TX;
 static volatile uint8_t   lwb_num_hops      = LWB_NUM_HOPS;
 static volatile uint32_t  lwb_period        = LWB_SCHED_PERIOD;
 
+extern uint32_t data_period;
+
 
 void listen_timeout(void)
 {
@@ -125,6 +127,8 @@ void vTask_com(void const * argument)
   if (!lwb_init(xTaskGetCurrentTaskHandle(), 0, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, listen_timeout, IS_HOST)) {
     FATAL_ERROR("LWB init failed");
   }
+  //lwb_set_ipi(data_period);
+
 #if COLLECT_FLOODING_DATA
   lwb_register_slot_callback(collect_radio_stats);
 
@@ -152,7 +156,7 @@ void vTask_com(void const * argument)
     LWB_MAX_PAYLOAD_LEN,
     LWB_MAX_DATA_SLOTS,
     lwb_sched_get_period(),
-    health_msg_period
+    data_period
   );
 #endif /* COLLECT_FLOODING_DATA */
 

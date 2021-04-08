@@ -67,8 +67,10 @@ void vTask_post(void const * argument)
       uint32_t div = (network_time / (1000000 * data_period));
       if (div != last_pkt) {
         /* generate a dummy packet (header only, no data) */
-        if (!ps_compose_msg(DPP_DEVICE_ID_SINK, DPP_MSG_TYPE_INVALID, 0, 0, &msg_buffer) ||
-            !xQueueSend(xQueueHandle_tx, &msg_buffer, 0)) {
+        if (ps_compose_msg(DPP_DEVICE_ID_SINK, DPP_MSG_TYPE_INVALID, 0, 0, &msg_buffer) &&
+            xQueueSend(xQueueHandle_tx, &msg_buffer, 0)) {
+          LOG_INFO("data packet generated");
+        } else {
           LOG_WARNING("failed to insert message into transmit queue");
         }
         last_pkt = div;
