@@ -58,6 +58,8 @@
 /* LWB config */
 #define LWB_ENABLE                      1
 #define LWB_NETWORK_ID                  0x4444
+#define LWB_MIN_NODE_ID                 1
+#define LWB_MAX_NODE_ID                 32
 #define LWB_N_TX                        2
 #define LWB_NUM_HOPS                    6
 #define LWB_T_GAP                       LWB_MS_TO_TICKS(10)
@@ -65,8 +67,8 @@
 #define LWB_DATA_ACK                    1
 #define LWB_CONT_USE_HSTIMER            1
 #define LWB_MAX_PAYLOAD_LEN             80
-#define LWB_MAX_NODES                   30
-#define LWB_MAX_DATA_SLOTS              LWB_MAX_NODES
+#define LWB_MAX_DATA_SLOTS              LWB_MAX_NUM_NODES
+#define LWB_USE_TX_DELAY                1
 #define LWB_ON_WAKEUP()                 lpm_update_opmode(OP_MODE_EVT_WAKEUP)
 #define LWB_T_PREPROCESS                LWB_MS_TO_TICKS(10)
 #define LWB_SCHED_NODE_LIST             1, 2, 3, 4, 5, 6, 7, 8, 9   //, 10, 11, 12, 13, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32  /* nodes to pre-register in the scheduler, also include HOST_ID here! */

@@ -129,6 +129,11 @@ void vTask_com(void const * argument)
   }
   //lwb_set_ipi(data_period);
 
+  /*if (IS_HOST) {
+    const uint16_t delayed_tx[] = { 3, 4, 5 };
+    lwb_sched_set_delay_nodes(delayed_tx, 3);
+  }*/
+
 #if COLLECT_FLOODING_DATA
   lwb_register_slot_callback(collect_radio_stats);
 
