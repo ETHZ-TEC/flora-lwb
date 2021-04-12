@@ -64,7 +64,6 @@
 #define LWB_NUM_HOPS                    6
 #define LWB_T_GAP                       LWB_MS_TO_TICKS(10)
 #define LWB_SCHED_PERIOD                15
-#define LWB_DATA_ACK                    1
 #define LWB_CONT_USE_HSTIMER            1
 #define LWB_MAX_PAYLOAD_LEN             80
 #define LWB_MAX_DATA_SLOTS              LWB_MAX_NUM_NODES
