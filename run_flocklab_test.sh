@@ -7,7 +7,9 @@
 
 XMLFILE=flocklab_dpp2lora_lwb.xml
 IMGFILE="Debug/comboard_lwb.elf"
-OBSIDS=$(sed -nE 's/^#define LWB_SCHED_NODE_LIST\s*([0-9, ]+).*/\1/p' Inc/app_config.h | sed s/,//g)
+SRCNODES=$(sed -nE 's/^#define LWB_SCHED_NODE_LIST\s*([0-9, ]+).*/\1/p' Inc/app_config.h | sed s/,//g | xargs)
+HOSTNODE=$(sed -nE 's/^#define HOST_ID\s*([0-9, ]+).*/\1/p' Inc/app_config.h | xargs)
+OBSIDS="$HOSTNODE $SRCNODES"
 SEDCMD=sed
 B64CMD=base64
 FLTOOLS=flocklab
@@ -67,29 +69,24 @@ END
 )
 
 
+check_cmd( ) {
+  which $1 > /dev/null 2>&1
+  if [ $? -ne 0 ]
+  then
+    echo "command '$1' not found"
+    exit 1
+  fi
+}
+
+
 # check if sed tool is installed
-which $SEDCMD > /dev/null 2>&1
-if [ $? -ne 0 ]
-then
-  echo "command '$SEDCMD' not found"
-  exit 1
-fi
+check_cmd $SEDCMD
 
 # check if base64 tool is installed
-which $B64CMD > /dev/null 2>&1
-if [ $? -ne 0 ]
-then
-  echo "command '$B64CMD' not found"
-  exit 1
-fi
+check_cmd $B64CMD
 
 # check if flocklab tools are installed
-which $FLTOOLS > /dev/null 2>&1
-if [ $? -ne 0 ]
-then
-  echo "command '$FLTOOLS' not found"
-  exit 1
-fi
+check_cmd $FLTOOLS
 
 # check if files exist
 if [ ! -f $IMGFILE ]; then
@@ -112,7 +109,7 @@ rm $B64FILE
 
 echo "Target image $IMGFILE embedded into $XMLFILE."
 
-if [ ! -z "$OBSIDS" ]; then
+if [ ! -z "$SRCNODES" ]; then
   # insert observer list
   $SEDCMD -i "s/<obsIds>.*<\/obsIds>/<obsIds>$OBSIDS<\/obsIds>/g" $XMLFILE
   echo "Observer IDs inserted."
