@@ -55,6 +55,7 @@
 /* USER CODE BEGIN Variables */
 
 /* RTOS Task Handles */
+TaskHandle_t xTaskHandle_pre  = NULL;
 TaskHandle_t xTaskHandle_com  = NULL;
 TaskHandle_t xTaskHandle_post = NULL;
 TaskHandle_t xTaskHandle_idle = NULL;
@@ -71,6 +72,7 @@ uint64_t last_reset       = 0;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
+extern void vTask_pre(void* argument);
 extern void vTask_com(void* argument);
 extern void vTask_post(void* argument);
 
@@ -185,6 +187,12 @@ void rtos_init(void)
   /* create RTOS tasks */
   /* max. priority is (configMAX_PRIORITIES - 1), higher numbers = higher
    * priority; idle task has priority 0 */
+  if (xTaskCreate(vTask_pre,
+                  "preTask",
+                  PRE_TASK_STACK_SIZE,
+                  NULL,
+                  tskIDLE_PRIORITY + 1,            /* lowest priority right after the idle task */
+                  &xTaskHandle_pre) != pdPASS)    { Error_Handler(); }
   if (xTaskCreate(vTask_post,
                   "postTask",
                   POST_TASK_STACK_SIZE,
@@ -213,11 +221,13 @@ void rtos_reset_cpu_dc(void)
 void rtos_check_stack_usage(void)
 {
   static unsigned long idleTaskStackWM = 0,
+                       preTaskStackWM  = 0,
                        comTaskStackWM  = 0,
                        postTaskStackWM = 0;
 
   /* check stack watermarks (store the used words) */
   unsigned long idleSWM = configMINIMAL_STACK_SIZE - (uxTaskGetStackHighWaterMark(xTaskHandle_idle));
+  unsigned long preSWM  = PRE_TASK_STACK_SIZE - (uxTaskGetStackHighWaterMark(xTaskHandle_pre));
   unsigned long comSWM  = COM_TASK_STACK_SIZE - (uxTaskGetStackHighWaterMark(xTaskHandle_com));
   unsigned long postSWM = POST_TASK_STACK_SIZE - (uxTaskGetStackHighWaterMark(xTaskHandle_post));
 
@@ -228,6 +238,15 @@ void rtos_check_stack_usage(void)
       LOG_WARNING("stack watermark of idle task reached %u%%", usage);
     } else {
       LOG_INFO("stack watermark of idle task increased to %u%%", usage);
+    }
+  }
+  if (preSWM > preTaskStackWM) {
+    preTaskStackWM = preSWM;
+    uint32_t usage = preTaskStackWM * 100 / PRE_TASK_STACK_SIZE;
+    if (usage > STACK_WARNING_THRESHOLD) {
+      LOG_WARNING("stack watermark of pre task reached %u%%", usage);
+    } else {
+      LOG_INFO("stack watermark of pre task increased to %u%%", usage);
     }
   }
   if (comSWM > comTaskStackWM) {

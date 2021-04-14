@@ -1,5 +1,7 @@
 /*
  * task_com.c
+ *
+ * communication task, runs the LWB protocol and controls the execution of the pre and post tasks
  */
 
 #include "main.h"
@@ -7,10 +9,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 
+extern TaskHandle_t  xTaskHandle_pre;
 extern TaskHandle_t  xTaskHandle_post;
 extern QueueHandle_t xQueueHandle_rx;
 extern QueueHandle_t xQueueHandle_tx;
-extern QueueHandle_t xQueueHandle_retransmit;
 
 /* global variables for binary patching the config */
 volatile uint16_t         host_id           = HOST_ID;
@@ -96,7 +98,7 @@ void collect_radio_stats(uint16_t initiator_id, lwb_phases_t lwb_phase, lwb_pack
 /* communication task */
 void vTask_com(void const * argument)
 {
-  LOG_VERBOSE("LWB task started");
+  LOG_VERBOSE("com task started");
 
   /* make sure the radio is awake */
   radio_wakeup();
@@ -124,7 +126,7 @@ void vTask_com(void const * argument)
   }
 
   /* init LWB */
-  if (!lwb_init(xTaskGetCurrentTaskHandle(), 0, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, listen_timeout, IS_HOST)) {
+  if (!lwb_init(xTaskGetCurrentTaskHandle(), xTaskHandle_pre, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, listen_timeout, IS_HOST)) {
     FATAL_ERROR("LWB init failed");
   }
   //lwb_set_ipi(data_period);

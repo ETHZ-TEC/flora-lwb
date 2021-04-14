@@ -39,8 +39,9 @@
 #define COLLECT_FLOODING_DATA           0
 
 /* memory */
-#define COM_TASK_STACK_SIZE             400                             /* in # words of 4 bytes */
-#define POST_TASK_STACK_SIZE            300                             /* in # words of 4 bytes */
+#define PRE_TASK_STACK_SIZE             256                             /* in # words of 4 bytes */
+#define COM_TASK_STACK_SIZE             320                             /* in # words of 4 bytes */
+#define POST_TASK_STACK_SIZE            256                             /* in # words of 4 bytes */
 #define STACK_WARNING_THRESHOLD         80                              /* a warning will be generated once the stack usage of a task exceeds this value (in percent) */
 #define TRANSMIT_QUEUE_SIZE             20                              /* #messages */
 #define RECEIVE_QUEUE_SIZE              LWB_MAX_DATA_SLOTS              /* #messages */
@@ -111,10 +112,12 @@
   #define ISR_OFF_IND()               if (!nested) PIN_CLR(FLOCKLAB_INT1)
   #define CPU_ON_IND()                //PIN_SET(FLOCKLAB_INT2)
   #define CPU_OFF_IND()               //PIN_CLR(FLOCKLAB_INT2)
-  #define LWB_RESUMED()               //PIN_SET(FLOCKLAB_INT2)
-  #define LWB_SUSPENDED()             //PIN_CLR(FLOCKLAB_INT2)
-  #define POST_TASK_RESUMED()         //PIN_SET(FLOCKLAB_INT2)
-  #define POST_TASK_SUSPENDED()       //PIN_CLR(FLOCKLAB_INT2)
+  #define LWB_RESUMED()               PIN_SET(FLOCKLAB_INT2)
+  #define LWB_SUSPENDED()             PIN_CLR(FLOCKLAB_INT2)
+  #define POST_TASK_RESUMED()         PIN_SET(FLOCKLAB_INT2)
+  #define POST_TASK_SUSPENDED()       PIN_CLR(FLOCKLAB_INT2)
+  #define PRE_TASK_RESUMED()          PIN_SET(FLOCKLAB_INT2)
+  #define PRE_TASK_SUSPENDED()        PIN_CLR(FLOCKLAB_INT2)
   #define GLORIA_START_IND()          led_on(LED_SYSTEM); PIN_SET(FLOCKLAB_INT2)
   #define GLORIA_STOP_IND()           led_off(LED_SYSTEM); PIN_CLR(FLOCKLAB_INT2)
   #define RADIO_TX_START_IND()        PIN_SET(FLOCKLAB_LED2)

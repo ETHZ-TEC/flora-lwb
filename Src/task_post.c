@@ -1,25 +1,13 @@
-/**
-  ******************************************************************************
-  * Flora
-  ******************************************************************************
-  * @author Roman Trub
-  * @file   task_post.c
-  * @brief  Post task (runs after the communication round)
-  *
-  *
-  ******************************************************************************
-  */
+/*
+ * task_post.c
+ *
+ * processes the packets received from the network
+ */
 
 #include "main.h"
 
 
-extern QueueHandle_t xQueueHandle_tx;
 extern QueueHandle_t xQueueHandle_rx;
-extern TaskHandle_t xTaskHandle_com;
-extern TaskHandle_t xTaskHandle_post;
-extern TaskHandle_t xTaskHandle_idle;
-
-uint32_t data_period = DATA_GENERATION_PERIOD;
 
 
 /* Private define ------------------------------------------------------------*/
@@ -38,7 +26,6 @@ uint32_t data_period = DATA_GENERATION_PERIOD;
 void vTask_post(void const * argument)
 {
   static dpp_message_t msg_buffer;
-  static uint32_t      last_pkt = 0;
 
   LOG_VERBOSE("post task started");
 
@@ -57,24 +44,6 @@ void vTask_post(void const * argument)
     }
     if (rcvd) {
       LOG_INFO("%u msg rcvd from network", rcvd);
-    }
-
-    /* generate a node info message if necessary (must be here) */
-    if (data_period) {
-      /* only send other messages once the node info msg has been sent! */
-      uint64_t network_time = 0;
-      lwb_get_last_syncpoint(&network_time, 0);
-      uint32_t div = (network_time / (1000000 * data_period));
-      if (div != last_pkt) {
-        /* generate a dummy packet (header only, no data) */
-        if (ps_compose_msg(DPP_DEVICE_ID_SINK, DPP_MSG_TYPE_INVALID, 0, 0, &msg_buffer) &&
-            xQueueSend(xQueueHandle_tx, &msg_buffer, 0)) {
-          LOG_INFO("data packet generated");
-        } else {
-          LOG_WARNING("failed to insert message into transmit queue");
-        }
-        last_pkt = div;
-      }
     }
 
     /* check for critical stack usage or overflow */
