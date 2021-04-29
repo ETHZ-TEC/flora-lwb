@@ -24,7 +24,7 @@
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
 
 /* USER CODE END Includes */
@@ -60,8 +60,9 @@ TaskHandle_t xTaskHandle_com  = NULL;
 TaskHandle_t xTaskHandle_post = NULL;
 TaskHandle_t xTaskHandle_idle = NULL;
 /* RTOS Queue Handles */
-QueueHandle_t xQueueHandle_tx = NULL;   /* holds the messages to be transmitted over the eLWB network */
-QueueHandle_t xQueueHandle_rx = NULL;   /* holds the messages received from the eLWB network */
+QueueHandle_t xQueueHandle_tx = NULL;   /* holds the messages to be transmitted over the LWB network */
+QueueHandle_t xQueueHandle_rx = NULL;   /* holds the messages received from the LWB network */
+QueueHandle_t xQueueHandle_retx = NULL; /* holds the messages to be retransmitted over the LWB network */
 /* Variables */
 uint64_t active_time      = 0;
 uint64_t wakeup_timestamp = 0;
@@ -181,6 +182,10 @@ void rtos_init(void)
   }
   xQueueHandle_tx = xQueueCreate(TRANSMIT_QUEUE_SIZE, DPP_MSG_PKT_LEN);
   if (xQueueHandle_tx == NULL) {
+    Error_Handler();
+  }
+  xQueueHandle_retx = xQueueCreate(TRANSMIT_QUEUE_SIZE, DPP_MSG_PKT_LEN);    /* make it the same size as the transmit queue */
+  if (xQueueHandle_retx == NULL) {
     Error_Handler();
   }
 

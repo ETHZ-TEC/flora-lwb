@@ -69,6 +69,7 @@
 #define LWB_MAX_PAYLOAD_LEN             80
 #define LWB_MAX_DATA_SLOTS              LWB_MAX_NUM_NODES
 //#define LWB_USE_TX_DELAY                1
+//#define LWB_DATA_ACK                    1
 #define LWB_ON_WAKEUP()                 lpm_update_opmode(OP_MODE_EVT_WAKEUP)
 #define LWB_T_PREPROCESS                LWB_MS_TO_TICKS(10)
 #define LWB_SCHED_NODE_LIST             1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 19, 20, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32  /* nodes to pre-register in the scheduler */

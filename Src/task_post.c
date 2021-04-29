@@ -39,7 +39,10 @@ void vTask_post(void const * argument)
     /* process all packets rcvd from the network (regardless of whether there is space in the BOLT queue) */
     uint16_t rcvd = 0;
     while (xQueueReceive(xQueueHandle_rx, (void*)&msg_buffer, 0)) {
-      //TODO process packets
+      if (!ps_validate_msg(&msg_buffer)) {
+        LOG_WARNING("invalid message received from node %u (type: %u  length: %u)", msg_buffer.header.device_id, msg_buffer.header.type, msg_buffer.header.payload_len);
+      }
+      //TODO message processing
       rcvd++;
     }
     if (rcvd) {

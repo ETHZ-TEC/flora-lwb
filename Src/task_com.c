@@ -13,6 +13,7 @@ extern TaskHandle_t  xTaskHandle_pre;
 extern TaskHandle_t  xTaskHandle_post;
 extern QueueHandle_t xQueueHandle_rx;
 extern QueueHandle_t xQueueHandle_tx;
+extern QueueHandle_t xQueueHandle_retx;
 
 /* global variables for binary patching the config */
 volatile uint16_t         host_id           = HOST_ID;
@@ -126,7 +127,7 @@ void vTask_com(void const * argument)
   }
 
   /* init LWB */
-  if (!lwb_init(xTaskGetCurrentTaskHandle(), xTaskHandle_pre, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, listen_timeout, IS_HOST)) {
+  if (!lwb_init(xTaskGetCurrentTaskHandle(), xTaskHandle_pre, xTaskHandle_post, xQueueHandle_rx, xQueueHandle_tx, xQueueHandle_retx, listen_timeout, IS_HOST)) {
     FATAL_ERROR("LWB init failed");
   }
   //lwb_set_ipi(data_period);
