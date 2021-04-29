@@ -205,7 +205,7 @@ void rtos_init(void)
                   tskIDLE_PRIORITY + 1,            /* lowest priority right after the idle task */
                   &xTaskHandle_post) != pdPASS)    { Error_Handler(); }
   if (xTaskCreate(vTask_com,
-                  "elwbTask",
+                  "lwbTask",
                   COM_TASK_STACK_SIZE,
                   NULL,
                   configMAX_PRIORITIES - 1,        /* highest priority task */

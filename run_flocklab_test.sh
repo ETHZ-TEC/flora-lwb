@@ -19,9 +19,9 @@ XMLTEMPLATE=$(cat <<- END
 <testConf xmlns="http://www.flocklab.ethz.ch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.flocklab.ethz.ch xml/flocklab.xsd">
     <!-- General configuration -->
     <generalConf>
-        <name>eLWB test</name>
+        <name>LWB test</name>
         <description>
-            A test of the eLWB on the DPP2 LoRa Comboard.
+            A test of the LWB on the DPP2 LoRa Comboard.
         </description>
         <schedule>
           <duration>65</duration>
@@ -58,8 +58,8 @@ XMLTEMPLATE=$(cat <<- END
 
     <embeddedImageConf>
         <embeddedImageId>Image_1</embeddedImageId>
-        <name>eLWB 0.1</name>
-        <description>eLWB test</description>
+        <name>LWB 0.1</name>
+        <description>LWB test</description>
         <platform>dpp2lora</platform>
         <data>
         </data>
