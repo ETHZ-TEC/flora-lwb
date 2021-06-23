@@ -1,13 +1,36 @@
-/**
-  ******************************************************************************
-  * Flora event-based Low-power Wireless Bus - config
-  ******************************************************************************
-  * @file   app_config.h
-  * @brief  application config file
-  *
-  *
-  ******************************************************************************
-  */
+/*
+ * Copyright (c) 2021, ETH Zurich, Computer Engineering Group (TEC)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE
+ * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * Flora "Low-power Wireless Bus" config
+ */
 
 #ifndef __APP_CONFIG_H
 #define __APP_CONFIG_H
@@ -109,27 +132,27 @@
 
 /* debugging */
 #if FLOCKLAB
-  #define ISR_ON_IND()                bool nested = PIN_STATE(FLOCKLAB_INT1); (void)nested; PIN_SET(FLOCKLAB_INT1)    /* if unused, insert 2x NOP here */
-  #define ISR_OFF_IND()               if (!nested) PIN_CLR(FLOCKLAB_INT1)
-  #define CPU_ON_IND()                //PIN_SET(FLOCKLAB_INT2)
-  #define CPU_OFF_IND()               //PIN_CLR(FLOCKLAB_INT2)
-  #define LWB_RESUMED()               PIN_SET(FLOCKLAB_INT2)
-  #define LWB_SUSPENDED()             PIN_CLR(FLOCKLAB_INT2)
-  #define POST_TASK_RESUMED()         PIN_SET(FLOCKLAB_INT2)
-  #define POST_TASK_SUSPENDED()       PIN_CLR(FLOCKLAB_INT2)
-  #define PRE_TASK_RESUMED()          PIN_SET(FLOCKLAB_INT2)
-  #define PRE_TASK_SUSPENDED()        PIN_CLR(FLOCKLAB_INT2)
-  #define GLORIA_START_IND()          led_on(LED_SYSTEM); PIN_SET(FLOCKLAB_INT2)
-  #define GLORIA_STOP_IND()           led_off(LED_SYSTEM); PIN_CLR(FLOCKLAB_INT2)
-  #define RADIO_TX_START_IND()        PIN_SET(FLOCKLAB_LED2)
-  #define RADIO_TX_STOP_IND()         PIN_CLR(FLOCKLAB_LED2)
-  #define RADIO_RX_START_IND()        PIN_SET(FLOCKLAB_LED3)
-  #define RADIO_RX_STOP_IND()         PIN_CLR(FLOCKLAB_LED3)
+  #define ISR_ON_IND()                  bool nested = PIN_STATE(FLOCKLAB_INT1); (void)nested; PIN_SET(FLOCKLAB_INT1)    /* if unused, insert 2x NOP here */
+  #define ISR_OFF_IND()                 if (!nested) PIN_CLR(FLOCKLAB_INT1)
+  #define CPU_ON_IND()                  //PIN_SET(FLOCKLAB_INT2)
+  #define CPU_OFF_IND()                 //PIN_CLR(FLOCKLAB_INT2)
+  #define LWB_RESUMED()                 PIN_SET(FLOCKLAB_INT2)
+  #define LWB_SUSPENDED()               PIN_CLR(FLOCKLAB_INT2)
+  #define POST_TASK_RESUMED()           PIN_SET(FLOCKLAB_INT2)
+  #define POST_TASK_SUSPENDED()         PIN_CLR(FLOCKLAB_INT2)
+  #define PRE_TASK_RESUMED()            PIN_SET(FLOCKLAB_INT2)
+  #define PRE_TASK_SUSPENDED()          PIN_CLR(FLOCKLAB_INT2)
+  #define GLORIA_START_IND()            led_on(LED_SYSTEM); PIN_SET(FLOCKLAB_INT2)
+  #define GLORIA_STOP_IND()             led_off(LED_SYSTEM); PIN_CLR(FLOCKLAB_INT2)
+  #define RADIO_TX_START_IND()          PIN_SET(FLOCKLAB_LED2)
+  #define RADIO_TX_STOP_IND()           PIN_CLR(FLOCKLAB_LED2)
+  #define RADIO_RX_START_IND()          PIN_SET(FLOCKLAB_LED3)
+  #define RADIO_RX_STOP_IND()           PIN_CLR(FLOCKLAB_LED3)
 #else /* FLOCKLAB */
-  #define GLORIA_START_IND()          led_on(LED_SYSTEM)
-  #define GLORIA_STOP_IND()           led_off(LED_SYSTEM)
-  #define RADIO_TX_START_IND()        PIN_SET(COM_GPIO1)
-  #define RADIO_TX_STOP_IND()         PIN_CLR(COM_GPIO1)
+  #define GLORIA_START_IND()            led_on(LED_SYSTEM)
+  #define GLORIA_STOP_IND()             led_off(LED_SYSTEM)
+  #define RADIO_TX_START_IND()          PIN_SET(COM_GPIO1)
+  #define RADIO_TX_STOP_IND()           PIN_CLR(COM_GPIO1)
 #endif /* FLOCKLAB */
 
 #endif /* __APP_CONFIG_H */
