@@ -34,8 +34,15 @@
 
 XMLFILE=flocklab_dpp2lora_lwb.xml
 IMGFILE="Debug/comboard_lwb.elf"
-SRCNODES=$(sed -nE 's/^#define LWB_SCHED_NODE_LIST\s*([0-9, ]+).*/\1/p' Inc/app_config.h | sed s/,//g | xargs)
-HOSTNODE=$(sed -nE 's/^#define HOST_ID\s*([0-9, ]+).*/\1/p' Inc/app_config.h | xargs)
+APPCONFIG="Inc/app_config.h"
+
+# make sure current working directory is correct
+if [[ $(pwd) = *"/Scripts"* ]]; then
+  cd ..
+fi
+
+SRCNODES=$(sed -nE 's/^#define LWB_SCHED_NODE_LIST\s*([0-9, ]+).*/\1/p' $APPCONFIG | sed s/,//g | xargs)
+HOSTNODE=$(sed -nE 's/^#define HOST_ID\s*([0-9, ]+).*/\1/p' $APPCONFIG | xargs)
 OBSIDS="$HOSTNODE $SRCNODES"
 SEDCMD=sed
 B64CMD=base64
