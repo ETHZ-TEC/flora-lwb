@@ -38,11 +38,6 @@
 
 /* --- adjustable parameters --- */
 
-/* general */
-#define FLOCKLAB                        1           /* set to 1 to run on FlockLab */
-#define FLOCKLAB_SWD                    0           /* set to 1 to reserve SWDIO / SWDCLK pins for debugging (GPIOs not available for tracing) */
-#define SWO_ENABLE                      0           /* set to 1 to enable data tracing or serial printing via SWO pin */
-
 /* network parameters */
 #define HOST_ID                         2           /* note: host ID is only used to determine whether a node is a host node (irrelevant for source nodes); config will be overwritten by binary patching! */
 #if !FLOCKLAB
@@ -108,51 +103,17 @@
 /* logging */
 #define LOG_ENABLE                      1
 #define LOG_LEVEL                       LOG_LEVEL_VERBOSE
-#define LOG_USE_DMA                     1
+#define LOG_USE_DMA                     0
+#define LOG_PRINT_IMMEDIATELY           1
 #define LOG_BUFFER_SIZE                 4096
 #if LOG_USE_DMA
   #define UART_FIFO_BUFFER_SIZE         LOG_BUFFER_SIZE
 #endif /* LOG_USE_DMA */
-#if BASEBOARD
-  #define LOG_ADD_TIMESTAMP             0       /* don't print the timestamp on the baseboard */
-  #define LOG_USE_COLORS                0
-  #define LOG_LEVEL_ERROR_STR           "<3>"  /* use syslog severity level number instead of strings */
-  #define LOG_LEVEL_WARNING_STR         "<4>"
-  #define LOG_LEVEL_INFO_STR            "<6>"
-  #define LOG_LEVEL_VERBOSE_STR         "<7>"
-#endif /* BASEBOARD */
-#if FLOCKLAB
-  #define LOG_ADD_TIMESTAMP             0       /* don't print the timestamp on FlockLab */
-  #define LOG_PRINT_IMMEDIATELY         1       /* enable immediate printing to get accurate timestamps on FlockLab */
-#endif /* FLOCKLAB */
-#if SWO_ENABLE
-  //#define LOG_PRINT_FUNC                swo_print
-  //#define LOG_PRINT_IMMEDIATELY         1
-#endif /* SWO_ENABLE */
 
 /* debugging */
-#if FLOCKLAB
-  #define ISR_ON_IND()                  bool nested = PIN_STATE(FLOCKLAB_INT1); (void)nested; PIN_SET(FLOCKLAB_INT1)    /* if unused, insert 2x NOP here */
-  #define ISR_OFF_IND()                 if (!nested) PIN_CLR(FLOCKLAB_INT1)
-  #define CPU_ON_IND()                  //PIN_SET(FLOCKLAB_INT2)
-  #define CPU_OFF_IND()                 //PIN_CLR(FLOCKLAB_INT2)
-  #define LWB_RESUMED()                 PIN_SET(FLOCKLAB_INT2)
-  #define LWB_SUSPENDED()               PIN_CLR(FLOCKLAB_INT2)
-  #define POST_TASK_RESUMED()           PIN_SET(FLOCKLAB_INT2)
-  #define POST_TASK_SUSPENDED()         PIN_CLR(FLOCKLAB_INT2)
-  #define PRE_TASK_RESUMED()            PIN_SET(FLOCKLAB_INT2)
-  #define PRE_TASK_SUSPENDED()          PIN_CLR(FLOCKLAB_INT2)
-  #define GLORIA_START_IND()            led_on(LED_SYSTEM); PIN_SET(FLOCKLAB_INT2)
-  #define GLORIA_STOP_IND()             led_off(LED_SYSTEM); PIN_CLR(FLOCKLAB_INT2)
-  #define RADIO_TX_START_IND()          PIN_SET(FLOCKLAB_LED2)
-  #define RADIO_TX_STOP_IND()           PIN_CLR(FLOCKLAB_LED2)
-  #define RADIO_RX_START_IND()          PIN_SET(FLOCKLAB_LED3)
-  #define RADIO_RX_STOP_IND()           PIN_CLR(FLOCKLAB_LED3)
-#else /* FLOCKLAB */
-  #define GLORIA_START_IND()            led_on(LED_SYSTEM)
-  #define GLORIA_STOP_IND()             led_off(LED_SYSTEM)
-  #define RADIO_TX_START_IND()          PIN_SET(COM_GPIO1)
-  #define RADIO_TX_STOP_IND()           PIN_CLR(COM_GPIO1)
-#endif /* FLOCKLAB */
+#define RADIO_RX_START_IND()          PIN_SET(LED_GREEN)
+#define RADIO_RX_STOP_IND()           PIN_CLR(LED_GREEN)
+#define RADIO_TX_START_IND()          PIN_SET(LED_RED)
+#define RADIO_TX_STOP_IND()           PIN_CLR(LED_RED)
 
 #endif /* __APP_CONFIG_H */

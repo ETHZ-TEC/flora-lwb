@@ -67,8 +67,6 @@ extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -82,59 +80,30 @@ void      rtos_check_stack_usage(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define RADIO_DIO1_WAKEUP_Pin GPIO_PIN_13
-#define RADIO_DIO1_WAKEUP_GPIO_Port GPIOC
-#define RADIO_DIO1_WAKEUP_EXTI_IRQn EXTI15_10_IRQn
-#define BOLT_IND_Pin GPIO_PIN_0
-#define BOLT_IND_GPIO_Port GPIOA
-#define COM_TREQ_Pin GPIO_PIN_3
-#define COM_TREQ_GPIO_Port GPIOA
-#define APP_IND_Pin GPIO_PIN_4
-#define APP_IND_GPIO_Port GPIOA
-#define BOLT_SCK_Pin GPIO_PIN_5
-#define BOLT_SCK_GPIO_Port GPIOA
-#define BOLT_MISO_Pin GPIO_PIN_6
-#define BOLT_MISO_GPIO_Port GPIOA
-#define BOLT_MOSI_Pin GPIO_PIN_7
-#define BOLT_MOSI_GPIO_Port GPIOA
-#define BOLT_ACK_Pin GPIO_PIN_0
-#define BOLT_ACK_GPIO_Port GPIOB
-#define BOLT_REQ_Pin GPIO_PIN_1
-#define BOLT_REQ_GPIO_Port GPIOB
-#define BOLT_MODE_Pin GPIO_PIN_2
-#define BOLT_MODE_GPIO_Port GPIOB
-#define RADIO_NSS_Pin GPIO_PIN_12
-#define RADIO_NSS_GPIO_Port GPIOB
-#define RADIO_SCK_Pin GPIO_PIN_13
-#define RADIO_SCK_GPIO_Port GPIOB
-#define RADIO_MISO_Pin GPIO_PIN_14
-#define RADIO_MISO_GPIO_Port GPIOB
-#define RADIO_MOSI_Pin GPIO_PIN_15
-#define RADIO_MOSI_GPIO_Port GPIOB
-#define RADIO_NRESET_Pin GPIO_PIN_8
+#define LED_GREEN_Pin GPIO_PIN_0
+#define LED_GREEN_GPIO_Port GPIOC
+#define LED_RED_Pin GPIO_PIN_1
+#define LED_RED_GPIO_Port GPIOC
+#define RADIO_NRESET_Pin GPIO_PIN_0
 #define RADIO_NRESET_GPIO_Port GPIOA
-#define UART_TX_Pin GPIO_PIN_9
+#define UART_TX_Pin GPIO_PIN_2
 #define UART_TX_GPIO_Port GPIOA
-#define UART_RX_Pin GPIO_PIN_10
+#define UART_RX_Pin GPIO_PIN_3
 #define UART_RX_GPIO_Port GPIOA
-#define RADIO_BUSY_Pin GPIO_PIN_11
-#define RADIO_BUSY_GPIO_Port GPIOA
-#define RADIO_ANT_SW_Pin GPIO_PIN_12
+#define RADIO_SCK_Pin GPIO_PIN_5
+#define RADIO_SCK_GPIO_Port GPIOA
+#define RADIO_MISO_Pin GPIO_PIN_6
+#define RADIO_MISO_GPIO_Port GPIOA
+#define RADIO_MOSI_Pin GPIO_PIN_7
+#define RADIO_MOSI_GPIO_Port GPIOA
+#define RADIO_NSS_Pin GPIO_PIN_8
+#define RADIO_NSS_GPIO_Port GPIOA
+#define RADIO_ANT_SW_Pin GPIO_PIN_9
 #define RADIO_ANT_SW_GPIO_Port GPIOA
-#define COM_PROG2_Pin GPIO_PIN_13
-#define COM_PROG2_GPIO_Port GPIOA
-#define COM_PROG_Pin GPIO_PIN_14
-#define COM_PROG_GPIO_Port GPIOA
 #define RADIO_DIO1_Pin GPIO_PIN_15
 #define RADIO_DIO1_GPIO_Port GPIOA
-#define COM_GPIO2_Pin GPIO_PIN_3
-#define COM_GPIO2_GPIO_Port GPIOB
-#define COM_GPIO1_Pin GPIO_PIN_3
-#define COM_GPIO1_GPIO_Port GPIOH
-#define LED_GREEN_Pin GPIO_PIN_8
-#define LED_GREEN_GPIO_Port GPIOB
-#define LED_RED_Pin GPIO_PIN_9
-#define LED_RED_GPIO_Port GPIOB
+#define RADIO_BUSY_Pin GPIO_PIN_3
+#define RADIO_BUSY_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
