@@ -196,6 +196,8 @@ void vTask_com(void const * argument)
   );
 #endif /* COLLECT_FLOODING_DATA */
 
+  while (lptimer_now() < LPTIMER_SECOND);   /* wait until 1s has elapsed since MCU startup */
+
   /* start LWB */
   lwb_start();
   FATAL_ERROR("LWB task terminated");
