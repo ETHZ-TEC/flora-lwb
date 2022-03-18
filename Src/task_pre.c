@@ -69,7 +69,7 @@ void generate_data_pkt(void)
 
 void vTask_pre(void const * argument)
 {
-  static uint32_t      last_pkt = 0;
+  static uint32_t last_pkt = 0;
 
   LOG_VERBOSE("pre task started");
 

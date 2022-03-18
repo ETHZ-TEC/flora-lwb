@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, ETH Zurich, Computer Engineering Group (TEC)
+ * Copyright (c) 2021 - 2022, ETH Zurich, Computer Engineering Group (TEC)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -91,7 +91,6 @@
 #define LWB_CONT_USE_HSTIMER            1
 #define LWB_MAX_PAYLOAD_LEN             80
 #define LWB_MAX_DATA_SLOTS              LWB_MAX_NUM_NODES
-//#define LWB_USE_TX_DELAY                1
 //#define LWB_DATA_ACK                    1
 #define LWB_ON_WAKEUP()                 lpm_update_opmode(OP_MODE_EVT_WAKEUP)
 #define LWB_T_PREPROCESS                LWB_MS_TO_TICKS(10)
@@ -116,23 +115,18 @@
 #if BASEBOARD
   #define LOG_ADD_TIMESTAMP             0       /* don't print the timestamp on the baseboard */
   #define LOG_USE_COLORS                0
-  #define LOG_LEVEL_ERROR_STR           "<3>"  /* use syslog severity level number instead of strings */
+  #define LOG_LEVEL_ERROR_STR           "<3>"   /* use syslog severity level number instead of strings */
   #define LOG_LEVEL_WARNING_STR         "<4>"
   #define LOG_LEVEL_INFO_STR            "<6>"
   #define LOG_LEVEL_VERBOSE_STR         "<7>"
 #endif /* BASEBOARD */
 #if FLOCKLAB
-  #define LOG_ADD_TIMESTAMP             0       /* don't print the timestamp on FlockLab */
   #define LOG_PRINT_IMMEDIATELY         1       /* enable immediate printing to get accurate timestamps on FlockLab */
 #endif /* FLOCKLAB */
-#if SWO_ENABLE
-  //#define LOG_PRINT_FUNC                swo_print
-  //#define LOG_PRINT_IMMEDIATELY         1
-#endif /* SWO_ENABLE */
 
 /* debugging */
 #if FLOCKLAB
-  #define ISR_ON_IND()                  bool nested = PIN_STATE(FLOCKLAB_INT1); (void)nested; PIN_SET(FLOCKLAB_INT1)    /* if unused, insert 2x NOP here */
+  #define ISR_ON_IND()                  bool nested = PIN_STATE(FLOCKLAB_INT1); (void)nested; PIN_SET(FLOCKLAB_INT1)
   #define ISR_OFF_IND()                 if (!nested) PIN_CLR(FLOCKLAB_INT1)
   #define CPU_ON_IND()                  //PIN_SET(FLOCKLAB_INT2)
   #define CPU_OFF_IND()                 //PIN_CLR(FLOCKLAB_INT2)
