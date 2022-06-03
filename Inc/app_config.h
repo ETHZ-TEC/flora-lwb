@@ -56,6 +56,7 @@
 #else /* SWO_ENABLE */
   #define LOW_POWER_MODE                LP_MODE_STOP2  /* low-power mode to use between rounds during periods of inactivity */
 #endif /* SWO_ENABLE */
+#define LPM_DISABLE_GPIO_CLOCKS         0
 
 /* data collection / generation */
 #define DATA_GENERATION_PERIOD          15          /* in seconds */
@@ -93,7 +94,7 @@
 #define LWB_MAX_DATA_SLOTS              LWB_MAX_NUM_NODES
 //#define LWB_DATA_ACK                    1
 #define LWB_ON_WAKEUP()                 lpm_update_opmode(OP_MODE_EVT_WAKEUP)
-#define LWB_T_PREPROCESS                LWB_MS_TO_TICKS(10)
+#define LWB_T_PREPROCESS                LWB_MS_TO_TICKS(20)
 #define LWB_SCHED_NODE_LIST             1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 19, 20, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32  /* nodes to pre-register in the scheduler */
 
 /* misc */
@@ -107,7 +108,7 @@
 /* logging */
 #define LOG_ENABLE                      1
 #define LOG_LEVEL                       LOG_LEVEL_VERBOSE
-#define LOG_USE_DMA                     1
+#define LOG_USE_DMA                     0
 #define LOG_BUFFER_SIZE                 4096
 #if LOG_USE_DMA
   #define UART_FIFO_BUFFER_SIZE         LOG_BUFFER_SIZE
